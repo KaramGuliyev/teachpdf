@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { UserButton, auth } from "@clerk/nextjs";
 import { LogIn } from "lucide-react";
-import FileUpload from "../components/fileUpload";
+import FileUpload from "../components/FileUpload";
 import Link from "next/link";
 
 export default async function Home() {
