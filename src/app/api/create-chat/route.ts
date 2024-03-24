@@ -1,3 +1,5 @@
+//! ROUTE -> /api/create-chat
+
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
 import { loadS3IntoPinecone } from "@/lib/pinecone";
