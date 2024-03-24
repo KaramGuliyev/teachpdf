@@ -1,8 +1,9 @@
 // import ChatComponent from "@/components/ChatComponent";
 import ChatSideBar from "@/components/ChatSideBar";
-// import PDFViewer from "@/components/PDFViewer";
+import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
+import { getS3Url } from "@/lib/s3";
 // import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
@@ -29,6 +30,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   }
 
   const currentChat = _chats.find((chat) => chat.id === parseInt(chatId));
+
   //   const isPro = await checkSubscription();
 
   return (
@@ -40,7 +42,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
         </div>
         {/* pdf viewer */}
         <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
-          {/* <PDFViewer pdf_url={currentChat?.pdfUrl || ""} /> */}
+          <PDFViewer pdf_url={currentChat?.pdfURL || ""} />
         </div>
         {/* chat component */}
         <div className="flex-[3] border-l-4 border-l-slate-200">{/* <ChatComponent chatId={parseInt(chatId)} /> */}</div>
