@@ -6,9 +6,9 @@ export const chats = pgTable("chats", {
   id: serial("id").primaryKey(),
   pdfName: text("pdf_name").notNull(),
   pdfURL: text("pdf_url").notNull(),
-  createdAt: timestamp("createdAt").notNull().defaultNow(),
   userId: varchar("userId", { length: 256 }).notNull(),
   fileKey: text("file_key").notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
 
 export const messages = pgTable("messages", {
