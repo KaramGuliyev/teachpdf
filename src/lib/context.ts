@@ -8,9 +8,9 @@ export async function getMatchesFromEmbeddings(
 ) {
   try {
     const client = new Pinecone({
-      apiKey: process.env.PINCEONE_API_KEY!,
+      apiKey: process.env.PINECONE_API_KEY!,
     });
-
+    
     const pineconeIndex = await client.index("teachpdf");
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
     const queryResult = await namespace.query({

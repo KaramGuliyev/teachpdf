@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import axios from "axios";
 import SubscriptionButton from "./SubscriptionButton";
 // import SubscriptionButton from "./SubscriptionButton";
-
 type Props = {
   chats: DrizzleChat[];
   chatId: number;
@@ -16,7 +15,7 @@ type Props = {
 };
 
 const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSubscription = async () => {
     try {
@@ -54,15 +53,15 @@ const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
           </Link>
         ))}
       </div>
-        <div className="absolute bottom-4 left-4 w-auto">
-          <div className=" flex gap-2 text-sm">
-            <Link href="/">Home</Link>
-            <Link href="/">Source</Link>
-          </div>
-          <div className="w-full flex mt-2 justify-center">
-            <SubscriptionButton disabled={loading} onClick={handleSubscription} isPro={isPro} />
-          </div>
+      <div className="absolute bottom-4 left-4 w-auto">
+        <div className=" flex gap-2 text-sm">
+          <Link href="/">Home</Link>
+          <Link href="/">Source</Link>
         </div>
+        <div className="w-full flex mt-2 justify-center">
+          <SubscriptionButton loading={loading} onClick={handleSubscription} isPro={isPro} />
+        </div>
+      </div>
     </div>
   );
 };

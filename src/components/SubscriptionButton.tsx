@@ -3,7 +3,11 @@ import React from "react";
 import { Button } from "./ui/button";
 import axios from "axios";
 
-type Props = { isPro: boolean };
+type Props = {
+  loading?: boolean;
+  isPro?: boolean;
+  onClick?: () => Promise<void>;
+};
 
 const SubscriptionButton = (props: Props) => {
   const [loading, setLoading] = React.useState(false);
