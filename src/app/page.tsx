@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { UserButton, auth } from "@clerk/nextjs";
 import { ArrowRight, LogIn } from "lucide-react";
-import FileUpload from "../components/FileUpload";
+import FileUpload from "@/components/FileUpload";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
@@ -30,7 +30,7 @@ export default async function Home() {
             <UserButton afterSignOutUrl="/" />
           </div>
           <div className="flex mt-2">
-          {isAuth && firstChat && (
+            {isAuth && firstChat && (
               <>
                 <Link href={`/chat/${firstChat.id}`}>
                   <Button>
