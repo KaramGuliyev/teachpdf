@@ -2,15 +2,12 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import { convertToAscii } from "./utils";
 import { getEmbeddings } from "./embeddings";
 
-export async function getMatchesFromEmbeddings(
-  embeddings: number[],
-  fileKey: string
-) {
+export async function getMatchesFromEmbeddings(embeddings: number[], fileKey: string) {
   try {
     const client = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY!,
     });
-    
+
     const pineconeIndex = await client.index("teachpdf");
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
     const queryResult = await namespace.query({
@@ -29,10 +26,7 @@ export async function getContext(query: string, fileKey: string) {
   const queryEmbeddings = await getEmbeddings(query);
   const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
 
-  const qualifyingDocs = matches.filter(
-    (match) => match.score && match.score > 0.7
-  );
-
+  const qualifyingDocs = matches.filter((match) => match.score && match.score > 0.7);
   type Metadata = {
     text: string;
     pageNumber: number;

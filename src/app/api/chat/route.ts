@@ -13,11 +13,11 @@ const config = new Configuration({
 });
 const openai = new OpenAIApi(config);
 
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<Response> {
   try {
     const { messages, chatId } = await req.json();
     const _chats = await db.select().from(chats).where(eq(chats.id, chatId));
-    if (_chats.length != 1) {
+    if (_chats.length !== 1) {
       return NextResponse.json({ error: "chat not found" }, { status: 404 });
     }
     const fileKey = _chats[0].fileKey;
@@ -49,7 +49,6 @@ export async function POST(req: Request) {
     });
     const stream = OpenAIStream(response, {
       onStart: async () => {
-        // save user message into db
         await db.insert(_messages).values({
           chatId,
           content: lastMessage.content,
@@ -57,7 +56,6 @@ export async function POST(req: Request) {
         });
       },
       onCompletion: async (completion) => {
-        // save ai message into db
         await db.insert(_messages).values({
           chatId,
           content: completion,
@@ -68,5 +66,6 @@ export async function POST(req: Request) {
     return new StreamingTextResponse(stream);
   } catch (error) {
     console.log(error);
+    return new Response("Internal Server Error", { status: 500 });
   }
 }
