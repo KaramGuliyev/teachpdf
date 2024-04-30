@@ -37,7 +37,8 @@
     "react-hot-toast": "^2.4.1",
     "stripe": "^14.22.0",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vercel": "^34.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",

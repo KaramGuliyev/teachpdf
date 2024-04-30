@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { UserButton, auth } from "@clerk/nextjs";
 import Link from "next/link";
 import { ArrowRight, LogIn } from "lucide-react";
-import FileUpload from "@/components/FileUpload";
+import FileUpload from "@/components/fileUpload";
 import { checkSubscription } from "@/lib/subscription";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import { db } from "@/lib/db";
@@ -45,8 +45,8 @@ export default async function Home() {
           </div>
 
           <p className="max-w-xl mt-1 text-lg text-slate-600">
-            Join millions of students, researchers and professionals to instantly
-            answer questions and understand research with AI
+            Join millions of students, researchers and professionals to instantly answer questions and understand research with
+            AI
           </p>
 
           <div className="w-full mt-4">
