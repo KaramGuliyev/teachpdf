@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
-import { Send } from "lucide-react";
+import { Send, ShareIcon } from "lucide-react";
 import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -38,20 +38,28 @@ const ChatComponent = ({ chatId }: Props) => {
         behavior: "smooth",
       });
     }
+    console.log(messages);
   }, [messages]);
 
   return (
-    <div className="relative h-full w-full max-h-screen overflow-scroll" id="message-container">
-      <div className="sticky top-0 inset-x-0 p-2 bg-white h-fit">
-        <h3 className="text-xl font-bold">Chat</h3>
+    <div className="relative flex flex-col h-screen">
+      <div className=" py-2 bg-white border-b-4 border-indigo-500">
+        <h3 className="flex gap-2 text-xl font-bold justify-center items-center">
+          Chat
+          <Button>
+            <ShareIcon />
+          </Button>
+        </h3>
       </div>
 
-      <MessageList messages={messages} isLoading={isLoading} />
+      <div className="flex-grow overflow-scroll" id="message-container">
+        <MessageList messages={messages} isLoading={isLoading} />
+      </div>
 
-      <form onSubmit={handleSubmit} className="sticky absolute bottom-0 left-0 inset-x-0 px-2 py-4 mt-1 bg-white">
+      <form onSubmit={handleSubmit} hidden={isLoading} className="sticky bottom-0 left-0 inset-x-0 px-2 py-4 mt-1 bg-white">
         <div className="flex">
           <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full" />
-          <Button className="bg-blue-600 ml-2">
+          <Button type="submit" className="bg-blue-600 ml-2">
             <Send className="h-4 w-4" />
           </Button>
         </div>
