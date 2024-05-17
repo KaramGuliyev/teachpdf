@@ -1,9 +1,9 @@
 import ChatComponent from "@/components/ChatComponent";
 import ChatSideBar from "@/components/ChatSideBar";
+import ErrorPage from "@/components/ErrorPage";
 import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
-import { getS3Url } from "@/lib/s3";
 import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
@@ -18,34 +18,40 @@ type Props = {
 
 const ChatPage = async ({ params: { chatId } }: Props) => {
   const { userId } = await auth();
+
   if (!userId) {
     return redirect("/sign-in");
   }
-  const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
-  if (!_chats) {
-    return redirect("/");
-  }
-  if (!_chats.find((chat) => chat.id === parseInt(chatId))) {
-    return redirect("/");
+
+  const userChats = await db.select().from(chats).where(eq(chats.userId, userId));
+
+  if (!userChats || userChats.length === 0) {
+    return <ErrorPage errorCode={404} errorMessage="No chats found for user" />;
+
   }
 
-  const currentChat = _chats.find((chat) => chat.id === parseInt(chatId));
+  const currentChatId = parseInt(chatId);
+  const currentChat = userChats.find((chat) => chat.id === currentChatId);
   const isPro = await checkSubscription();
+
+  if (!currentChat) {
+    return <ErrorPage errorCode={404} errorMessage="This page could not be found." />;
+  }
 
   return (
     <div className="flex max-h-screen overflow-scroll">
       <div className="flex w-full max-h-screen overflow-scroll">
-        {/* chat sidebar */}
+        {/* Chat sidebar */}
         <div className="flex-[1] max-w-xs">
-          <ChatSideBar chats={_chats} chatId={parseInt(chatId)} isPro={isPro} />
+          <ChatSideBar chats={userChats} chatId={currentChatId} isPro={isPro} />
         </div>
-        {/* pdf viewer */}
-        <div className="max-h-screen p-4 oveflow-scroll flex-[5]">
-          <PDFViewer pdf_url={currentChat?.pdfURL || ""} />
+        {/* PDF viewer */}
+        <div className="max-h-screen p-4 overflow-scroll flex-[5]">
+          <PDFViewer pdf_url={currentChat.pdfURL || ""} />
         </div>
-        {/* chat component */}
+        {/* Chat component */}
         <div className="flex-[3] border-l-4 border-l-slate-200">
-          <ChatComponent chatId={parseInt(chatId)} />
+          <ChatComponent chatId={currentChatId} currentChat={currentChat} />
         </div>
       </div>
     </div>
