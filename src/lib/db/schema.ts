@@ -1,5 +1,6 @@
-import { PgTable, integer, pgEnum, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
-
+import { integer, pgEnum, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { boolean } from "drizzle-orm/pg-core";
 export const userSystemEnum = pgEnum("user_system_enum", ["system", "user"]);
 
 export const chats = pgTable("chats", {
@@ -7,6 +8,7 @@ export const chats = pgTable("chats", {
   pdfName: text("pdf_name").notNull(),
   pdfURL: text("pdf_url").notNull(),
   userId: varchar("userId", { length: 256 }).notNull(),
+  isPublic: boolean("isPublic").default(false),
   fileKey: text("file_key").notNull(),
   createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
