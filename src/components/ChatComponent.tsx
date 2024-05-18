@@ -3,11 +3,12 @@ import React, { useEffect } from "react";
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
-import { Loader2, Send } from "lucide-react";
+import { Loader2, Send, Share } from "lucide-react";
 import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Message } from "ai";
+import toast from "react-hot-toast";
 
 type Props = { chatId: number; currentChat: any };
 
@@ -44,6 +45,7 @@ const ChatComponent = ({ chatId, currentChat }: Props) => {
     try {
       const response = await axios.put<boolean>("/api/share-chat", { isCurrentlyPublic, chatId });
       setIsPublic(response.data);
+      toast.success(`Chat is now ${response.data ? "public" : "private"}`);
     } catch (error) {
       console.error("Error sharing chat:", error);
     } finally {
@@ -53,15 +55,28 @@ const ChatComponent = ({ chatId, currentChat }: Props) => {
 
   const shareButtonLabel = isPublic ? "Make Private" : "Make Public";
 
+  const copyToClipboard = () => {
+    if (!isPublic) {
+      return toast("Chat is not public.", { icon: "🔒" });
+    }
+    toast("Link copied to clipboard", { icon: "📋" });
+    navigator.clipboard.writeText(`${window.location.origin}/shared/${chatId}`);
+  };
+
   return (
     <div className="relative flex flex-col h-screen">
       <div className="py-2 bg-white border-b-4 border-indigo-500">
-        <h3 className="flex gap-2 text-xl font-bold justify-center items-center">
+        <div className="flex gap-2 text-xl font-bold justify-center items-center">
+          <Share
+            className="p-1 cursor-pointer transition-colors rounded-md text-gray-600 bg-gray-300 hover:bg-gray-700 hover:text-white"
+            size={24}
+            onClick={copyToClipboard}
+          />
           Chat
           <Button onClick={() => handleShareChat(!isPublic)} disabled={loading}>
             <span>{loading ? <Loader2 className="animate-spin" /> : shareButtonLabel}</span>
           </Button>
-        </h3>
+        </div>
       </div>
 
       <div className="flex-grow overflow-scroll" id="message-container">

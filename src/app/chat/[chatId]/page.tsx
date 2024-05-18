@@ -27,7 +27,6 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 
   if (!userChats || userChats.length === 0) {
     return <ErrorPage errorCode={404} errorMessage="No chats found for user" />;
-
   }
 
   const currentChatId = parseInt(chatId);
@@ -35,7 +34,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   const isPro = await checkSubscription();
 
   if (!currentChat) {
-    return <ErrorPage errorCode={404} errorMessage="This page could not be found." />;
+    return <ErrorPage errorCode={404} />;
   }
 
   return (

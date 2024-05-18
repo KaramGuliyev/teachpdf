@@ -5,10 +5,10 @@ import React from "react";
 
 type Props = {
   isLoading: boolean;
-  messages: Message[];
+  messages: Message[] | undefined;
 };
 
-const MessageList = ({ messages, isLoading }: Props) => {
+const ShareMessageList = ({ messages, isLoading }: Props) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -17,7 +17,13 @@ const MessageList = ({ messages, isLoading }: Props) => {
     );
   }
 
-  if (!messages || messages.length === 0) return null;
+  if (!messages || messages.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>No messages yet.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-2 px-4 mb-2">
@@ -42,4 +48,4 @@ const MessageList = ({ messages, isLoading }: Props) => {
   );
 };
 
-export default MessageList;
+export default ShareMessageList;

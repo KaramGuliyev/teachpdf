@@ -1,11 +1,12 @@
-"use client";
+"use client"
+import errorMessages from "@/lib/errorMessages";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 
 interface ErrorProps {
   errorCode: number;
-  errorMessage: string;
+  errorMessage?: string;
 }
 
 const styles: { [key: string]: React.CSSProperties } = {
@@ -29,6 +30,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     fontWeight: 500,
     verticalAlign: "top",
     lineHeight: "49px",
+    borderRight: "1px solid rgba(0, 0, 0, 0.3)",
   },
   h2: {
     fontSize: 17,
@@ -42,17 +44,22 @@ const ErrorPage: React.FC<ErrorProps> = ({ errorCode, errorMessage }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      toast.success("Redirecting to home page...");
+    const redirectTimeout = setTimeout(() => {
+      toast("Redirecting to home page...", { icon: "🏠" });
       router.push("/");
     }, 3000);
 
-    return () => clearTimeout(timeout);
-  }, []);
+    return () => clearTimeout(redirectTimeout);
+  }, [router]);
+
+  const defaultMessage = errorMessages[errorCode]?.message || "An unexpected error occurred";
+  const messageInfo = errorMessages[errorCode]?.info || "Sorry, no further information available.";
+
+  const message = errorMessage || defaultMessage;
 
   return (
     <>
-      <title>{`${errorCode}: ${errorMessage}`}</title>
+      <title>{`${errorCode}: ${message}`}</title>
       <div style={styles.error}>
         <React.Fragment>
           <style
@@ -61,11 +68,14 @@ const ErrorPage: React.FC<ErrorProps> = ({ errorCode, errorMessage }) => {
                 "body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}",
             }}
           />
-          <h1 className="next-error-h1" style={styles.h1}>
-            {errorCode}
-          </h1>
-          <div style={styles.desc}>
-            <h2 style={styles.h2}>{errorMessage}</h2>
+          <div className="display:flex;">
+            <h1 className="next-error-h1" style={styles.h1}>
+              {errorCode}
+            </h1>
+            <div style={styles.desc}>
+              <h2 style={styles.h2}>{message}</h2>
+            </div>
+            <p className="mt-5 text-xs xs:min-md:text-sm">{messageInfo}</p>
           </div>
         </React.Fragment>
       </div>
