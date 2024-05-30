@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
-import { Loader2, Send, Share } from "lucide-react";
+import { Loader2, Lock, Send, Share, Unlock } from "lucide-react";
 import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -53,7 +53,17 @@ const ChatComponent = ({ chatId, currentChat }: Props) => {
     }
   };
 
-  const shareButtonLabel = isPublic ? "Make Private" : "Make Public";
+  const shareButtonLabel = isPublic ? (
+    <div className="flex justify-center items-center mr-1">
+      <Unlock className="mr-1" width={18} />
+      Make Private
+    </div>
+  ) : (
+    <div className="flex justify-center items-center ">
+      <Lock className="mr-1" width={18} />
+      Make Public
+    </div>
+  );
 
   const copyToClipboard = () => {
     if (!isPublic) {
