@@ -18,7 +18,6 @@ const SharedChatComponent = ({ chatId, currentChat }: Props) => {
     },
   });
 
-
   const handleSignInButton = (e: React.FormEvent) => {
     e.preventDefault();
     toast("Redirecting to sign-in page...", { icon: "🔒" });
@@ -37,7 +36,7 @@ const SharedChatComponent = ({ chatId, currentChat }: Props) => {
       <form
         onSubmit={handleSignInButton}
         hidden={messagesLoading}
-        className="sticky bottom-0 left-0 inset-x-0 px-2 py-4 mt-1 bg-white"
+        className="sticky bottom-0 left-0 inset-x-0 px-2 py-2 bg-white"
       >
         <div className="flex">
           <Button type="submit" className="w-full ml-2">

@@ -96,7 +96,7 @@ const ChatComponent = ({ chatId, currentChat }: Props) => {
       <form
         onSubmit={handleSubmit}
         hidden={messagesLoading}
-        className="sticky bottom-0 left-0 inset-x-0 px-2 py-4 mt-1 bg-white"
+        className="sticky bottom-0 left-0 inset-x-0 px-2 py-2 bg-white"
       >
         <div className="flex">
           <Input value={input} onChange={handleInputChange} placeholder="Ask any question..." className="w-full" />

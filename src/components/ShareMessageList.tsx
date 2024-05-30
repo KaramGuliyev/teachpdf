@@ -26,7 +26,7 @@ const ShareMessageList = ({ messages, isLoading }: Props) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 px-4 mb-2">
+    <div className="flex flex-col gap-2 px-4 my-2">
       {messages.map((message) => (
         <div
           key={message.id}
