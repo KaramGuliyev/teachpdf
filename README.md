@@ -47,7 +47,3 @@ This project is a Next.js-based AI chat application that leverages the power of 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-[Add your chosen license here]
