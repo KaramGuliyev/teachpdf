@@ -1,66 +1,52 @@
-import { Button } from "@/components/ui/button";
-import { UserButton, auth } from "@clerk/nextjs";
+import { AlertTriangle, Archive, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { ArrowRight, LogIn } from "lucide-react";
-import FileUpload from "@/components/fileUpload";
-import { checkSubscription } from "@/lib/subscription";
-import SubscriptionButton from "@/components/SubscriptionButton";
-import { db } from "@/lib/db";
-import { chats } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
 
-export default async function Home() {
-  const { userId } = await auth();
-  const isAuth = !!userId;
-  const isPro = await checkSubscription();
-  let firstChat;
-  if (userId) {
-    firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
-    if (firstChat) {
-      firstChat = firstChat[0];
-    }
-  }
+export default function Component() {
   return (
-    <div className="w-screen min-h-screen bg-gradient-to-r from-rose-100 to-teal-100">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="flex flex-col items-center text-center">
-          <div className="flex items-center">
-            <h1 className="mr-3 text-5xl font-semibold">Chat with any PDF</h1>
-            <UserButton afterSignOutUrl="/" />
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="max-w-2xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="p-8">
+          <div className="flex items-center justify-center mb-6">
+            <Archive className="h-12 w-12 text-yellow-500 mr-4" />
+            <h1 className="text-3xl font-bold text-gray-800">Project Retired</h1>
           </div>
-
-          <div className="flex mt-2">
-            {isAuth && firstChat && (
-              <>
-                <Link href={`/chat/${firstChat.id}`}>
-                  <Button>
-                    Go to Chats <ArrowRight className="ml-2" />
-                  </Button>
-                </Link>
-                <div className="ml-3">
-                  <SubscriptionButton isPro={isPro} />
-                </div>
-              </>
-            )}
-          </div>
-
-          <p className="max-w-xl mt-1 text-lg text-slate-600">
-            Join millions of students, researchers and professionals to instantly answer questions and understand research with
-            AI
-          </p>
-
-          <div className="w-full mt-4">
-            {isAuth ? (
-              <FileUpload />
-            ) : (
-              <Link href="/sign-in">
-                <Button>
-                  Login to get Started!
-                  <LogIn className="w-4 h-4 ml-2" />
-                </Button>
+          <div className="space-y-6 text-center">
+            <p className="text-xl text-gray-600">This project has been retired and is no longer actively maintained.</p>
+            <div className="flex items-center justify-center text-yellow-600 bg-yellow-100 py-2 px-4 rounded-md">
+              <AlertTriangle className="h-5 w-5 mr-2" />
+              <span>No further updates or support will be provided.</span>
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold text-gray-700">What does this mean?</h2>
+              <ul className="text-gray-600 list-disc list-inside">
+                <li>The project will remain available for reference</li>
+                <li>No new features or bug fixes will be implemented</li>
+                <li>Security vulnerabilities will not be addressed</li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold text-gray-700">Recommended Actions</h2>
+              <ul className="text-gray-600 list-disc list-inside">
+                <li>Consider migrating to alternative solutions</li>
+                <li>Archive any projects depending on this repository</li>
+                <li>Reach out if you&apos;re interested in maintaining a fork</li>
+              </ul>
+            </div>
+            <div className="pt-4">
+              <Link
+                href="https://github.com/KaramGuliyev/teachpdf"
+                className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              >
+                View Project Archive <ExternalLink className="ml-2 h-4 w-4" />
               </Link>
-            )}
+            </div>
           </div>
+        </div>
+        <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-between items-center">
+          <p className="text-sm text-gray-500">Last updated: {new Date().toLocaleDateString()}</p>
+          <Link href="mailto:karamguliyev@juniustech.com" className="text-sm text-blue-600 hover:text-blue-800">
+            Contact Us
+          </Link>
         </div>
       </div>
     </div>

@@ -51,14 +51,15 @@ const FileUpload = (props: Props) => {
         toast.error("File too large");
         return;
       }
-
       try {
+        toast("Uploading PDF...", { icon: "🚀" });
         setUploading(true);
         const data = await uploadToS3(file);
         if (!data?.file_key || !data.file_name) {
           toast.error("Something went wrong");
           return;
         }
+        toast("Creating chat...", { icon: "🚀" });
         mutate(data, {
           onSuccess: ({ chat_id }) => {
             toast.success("Chat created!");
