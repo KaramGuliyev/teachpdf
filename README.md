@@ -1,37 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js AI Chat Application
+
+This project is a Next.js-based AI chat application that leverages the power of artificial intelligence to provide interactive conversations. It allows users to chat with AI about uploaded PDF documents.
+
+## Features
+
+- Built with Next.js 13 App Router
+- AI-powered chat functionality using OpenAI
+- PDF upload and chat functionality
+- User authentication with Clerk
+- Responsive layout using Shadcn UI
+- Database integration with DrizzleORM
+- File storage with Amazon S3
+- Vector database with Pinecone for efficient document querying
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Set up environment variables (for Clerk, OpenAI, S3, Pinecone, etc.)
+4. Run the development server:
+   ```
+   npm run dev
+   ```
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Structure
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `src/app/page.tsx`: Main page component
+- `src/app/layout.tsx`: Root layout component
+- `src/app/chat/[chatId]/page.tsx`: Individual chat page
+- `src/app/api/chat/route.ts`: API route for chat functionality
+- `src/app/api/create-chat/route.ts`: API route for creating new chats
+- `src/components/`: Reusable components (ChatComponent, ChatSideBar, PDFViewer, etc.)
+- `src/lib/`: Utility functions and database setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- PDF Upload: Users can upload PDF documents to chat about.
+- AI-Powered Chat: Utilizes OpenAI to generate responses based on the uploaded PDFs.
+- User Authentication: Secure login and user management with Clerk.
+- Subscription Checking: Functionality to check user subscription status.
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# teachpdf
+[Add your chosen license here]

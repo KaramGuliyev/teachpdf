@@ -20,7 +20,7 @@ const SharedChatComponent = ({ chatId, currentChat }: Props) => {
 
   const handleSignInButton = (e: React.FormEvent) => {
     e.preventDefault();
-    toast("Redirecting to sign-in page...", { icon: "🔒" });
+    toast(" to sign-iRedirectingn page...", { icon: "🔒" });
   };
 
   return (
